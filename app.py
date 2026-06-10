@@ -1,13 +1,10 @@
 import streamlit as st
 import gspread
 import pandas as pd
-from google.oauth2.service_account import Credentials
-from datetime import date
 
-fecha = st.date_input(
-    "Fecha",
-    value=date.today()
-)
+from google.oauth2.service_account import Credentials
+
+from datetime import datetime, date
 
 # =====================================================
 # CONFIGURACION
