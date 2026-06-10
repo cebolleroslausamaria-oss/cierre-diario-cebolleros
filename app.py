@@ -67,9 +67,13 @@ creds = Credentials.from_service_account_info(
 
 client = gspread.authorize(creds)
 
-sheet = client.open_by_key(
-    SPREADSHEET_ID
-).sheet1
+spreadsheet = client.open_by_key(SPREADSHEET_ID)
+
+sheet = spreadsheet.sheet1
+
+sheet_gastos = spreadsheet.worksheet(
+    "Gastos_Adicionales"
+)
 
 # =====================================================
 # TITULO
@@ -168,6 +172,53 @@ otros = st.number_input(
     format="%.2f"
 )
 
+# =====================================
+# GASTOS ADICIONALES
+# =====================================
+
+st.subheader("🧾 Gastos Adicionales")
+
+if "gastos_extra" not in st.session_state:
+    st.session_state.gastos_extra = []
+
+if st.button("➕ Agregar Gasto"):
+
+    st.session_state.gastos_extra.append(
+        {
+            "concepto": "",
+            "valor": 0.0
+        }
+    )
+
+total_gastos_extra = 0
+
+for i in range(len(st.session_state.gastos_extra)):
+
+    c1, c2 = st.columns([3, 1])
+
+    with c1:
+        concepto = st.text_input(
+            f"Concepto {i+1}",
+            key=f"concepto_{i}"
+        )
+
+    with c2:
+        valor = st.number_input(
+            f"Valor {i+1}",
+            min_value=0.0,
+            step=1000.0,
+            key=f"valor_{i}"
+        )
+
+    st.session_state.gastos_extra[i]["concepto"] = concepto
+    st.session_state.gastos_extra[i]["valor"] = valor
+
+    total_gastos_extra += valor
+
+st.info(
+    f"Total Gastos Adicionales: ${total_gastos_extra:,.0f}"
+)
+
 # =====================================================
 # CALCULO GANANCIA
 # =====================================================
@@ -183,7 +234,11 @@ gastos_totales = (
     + otros
 )
 
-ganancia = produccion - gastos_totales
+ganancia = (
+    produccion
+    - gastos_totales
+    - total_gastos_extra
+)
 
 st.metric(
     "Ganancia Calculada",
@@ -210,6 +265,18 @@ if st.button("Guardar Cierre"):
             cebolla,
             otros,
             ganancia,
+            st.session_state.usuario,
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        ])
+        
+        for gasto in st.session_state.gastos_extra:
+
+    if gasto["concepto"] and gasto["valor"] > 0:
+
+        sheet_gastos.append_row([
+            str(fecha),
+            gasto["concepto"],
+            gasto["valor"],
             st.session_state.usuario,
             datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ])
