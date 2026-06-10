@@ -283,11 +283,11 @@ if st.button("Guardar Cierre"):
                     datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 ])
 
-        st.success("✅ Registro guardado correctamente")
-        st.rerun()
+       st.success("✅ Registro guardado correctamente")
 
-        # Limpiar gastos adicionales
-        st.session_state.gastos_extra = []
+       st.session_state.gastos_extra = []
+
+       st.rerun()
 
     except Exception as e:
 
