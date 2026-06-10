@@ -111,28 +111,32 @@ with col1:
         "Producción",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="produccion"
     )
 
     gasto_dia = st.number_input(
         "Gasto del Día",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="gasto_dia"
     )
 
     pago_personal = st.number_input(
         "Pago Personal",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="pago_personal"
     )
 
     pago_pan = st.number_input(
         "Pago Pan",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="pago_pan"
     )
 
 with col2:
@@ -141,35 +145,40 @@ with col2:
         "Pago Marbella",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="pago_marbella"
     )
 
     pago_jugos = st.number_input(
         "Pago Jugos",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="pago_jugos"
     )
 
     base = st.number_input(
         "Base",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="base"
     )
 
     cebolla = st.number_input(
         "Cebolla",
         min_value=0.0,
         step=1000.0,
-        format="%.2f"
+        format="%.2f",
+        key="cebolla"
     )
 
 otros = st.number_input(
     "Otros Gastos",
     min_value=0.0,
     step=1000.0,
-    format="%.2f"
+    format="%.2f",
+    key="otros"
 )
 
 # =====================================
@@ -283,8 +292,17 @@ if st.button("Guardar Cierre"):
 
         st.success("✅ Registro guardado correctamente")
 
-        st.session_state.gastos_extra = []
+        st.session_state.produccion = 0.0
+        st.session_state.gasto_dia = 0.0
+        st.session_state.pago_personal = 0.0
+        st.session_state.pago_pan = 0.0
+        st.session_state.pago_marbella = 0.0
+        st.session_state.pago_jugos = 0.0
+        st.session_state.base = 0.0
+        st.session_state.cebolla = 0.0
+        st.session_state.otros = 0.0
 
+        st.session_state.gastos_extra = []
         st.rerun()
 
     except Exception as e:
