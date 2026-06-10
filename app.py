@@ -253,6 +253,7 @@ if st.button("Guardar Cierre"):
 
     try:
 
+        # Guardar cierre principal
         sheet.append_row([
             str(fecha),
             produccion,
@@ -268,27 +269,28 @@ if st.button("Guardar Cierre"):
             st.session_state.usuario,
             datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         ])
-        
+
+        # Guardar gastos adicionales
         for gasto in st.session_state.gastos_extra:
 
-    if gasto["concepto"] and gasto["valor"] > 0:
+            if gasto["concepto"] != "" and gasto["valor"] > 0:
 
-        sheet_gastos.append_row([
-            str(fecha),
-            gasto["concepto"],
-            gasto["valor"],
-            st.session_state.usuario,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        ])
+                sheet_gastos.append_row([
+                    str(fecha),
+                    gasto["concepto"],
+                    gasto["valor"],
+                    st.session_state.usuario,
+                    datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                ])
 
         st.success("✅ Registro guardado correctamente")
 
+        # Limpiar gastos adicionales
+        st.session_state.gastos_extra = []
+
     except Exception as e:
 
-        st.error(
-            f"Error guardando registro: {e}"
-        )
-
+        st.error(f"Error guardando registro: {e}")
 
 # =====================================================
 # DASHBOARD
