@@ -10,8 +10,8 @@ from datetime import datetime
 
 SPREADSHEET_ID = "15fsCcyF6WUH1m6ax4cnadXIapL8VN7hNbo9NmLXleFA"
 
-USUARIO = "jorge"
-PASSWORD = "CDC@2026!"
+USUARIO = "carlos"
+PASSWORD = "12345"
 
 # =====================================================
 # PAGINA
