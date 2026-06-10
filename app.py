@@ -284,6 +284,7 @@ if st.button("Guardar Cierre"):
                 ])
 
         st.success("✅ Registro guardado correctamente")
+        st.rerun()
 
         # Limpiar gastos adicionales
         st.session_state.gastos_extra = []
